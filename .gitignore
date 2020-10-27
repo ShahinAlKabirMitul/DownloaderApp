@@ -3,3 +3,12 @@
 ################################################################################
 
 /DownloaderApp/DownloaderApp.WPF/obj
+/DownloaderApp/.vs/DownloaderApp/v16
+/.vs
+/DownloaderApp/DownloaderApp.WPF/bin/Debug/netcoreapp3.1
+/DownloaderApp/DownloaderModel/bin/Debug/netcoreapp3.1
+/DownloaderApp/DownloaderModel/obj/Debug/netcoreapp3.1
+/DownloaderApp/DownloaderModel/obj
+/DownloaderApp/DownloaderViewModel/bin/Debug/netcoreapp3.1
+/DownloaderApp/DownloaderViewModel/obj
+/DownloaderApp/.vs/DownloaderApp/DesignTimeBuild

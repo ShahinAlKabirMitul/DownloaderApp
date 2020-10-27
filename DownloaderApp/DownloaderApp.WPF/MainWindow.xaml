@@ -5,8 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DownloaderApp.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="500">
     <Grid>
+        <TextBlock Text="Login" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Margin="0,30,0,0" />
+        <TextBlock Text="Enter your UserName" FontSize="20" HorizontalAlignment="Left" Margin="112,90,0,0" VerticalAlignment="Top" />
+        <TextBox Height="40" Text="{Binding txtUserName}" FontSize="20" Padding="5,2,47,0" HorizontalAlignment="Left" Margin="112,110,0,0"  Name="txtUserName" VerticalAlignment="Top" Width="274" />
 
+        <TextBlock Text="Enter your password" FontSize="20" HorizontalAlignment="Left" Margin="112,160,0,0" VerticalAlignment="Top" />
+        <TextBox Height="40"   FontSize="20" Padding="5,2,47,0" HorizontalAlignment="Left" Margin="112,193,0,0" Name="txtVisiblePasswordbox" VerticalAlignment="Top" Width="274" />
+        <PasswordBox Height="40"  FontSize="20" Padding="5,2,47,0" HorizontalAlignment="Left" Margin="112,193,0,0" Name="txtPasswordbox" VerticalAlignment="Top" Width="274" 
+                     PasswordChanged="txtPasswordbox_PasswordChanged"/>
+        <Image Source="/images/show.png" Height="30" HorizontalAlignment="Left" Name="ImgShowHide" Stretch="Fill" VerticalAlignment="Top" Width="30" Margin="351,198,0,0" 
+               MouseLeave="ImgShowHide_MouseLeave"  PreviewMouseDown="ImgShowHide_PreviewMouseDown" PreviewMouseUp="ImgShowHide_PreviewMouseUp"/>
+        <Button x:Name="btnLogin" Content="Login" Command="{Binding Path=LoginCommand}" Width="35" Height="25" Margin="112,160,0,0"/>
     </Grid>
 </Window>

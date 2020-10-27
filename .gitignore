@@ -12,3 +12,5 @@
 /DownloaderApp/DownloaderViewModel/bin/Debug/netcoreapp3.1
 /DownloaderApp/DownloaderViewModel/obj
 /DownloaderApp/.vs/DownloaderApp/DesignTimeBuild
+/DownloaderApp/DownloadApp.Service
+/DownloaderApp/DownloaderApp.XMLData

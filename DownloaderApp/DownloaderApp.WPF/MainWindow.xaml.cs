@@ -25,9 +25,9 @@ namespace DownloaderApp.WPF
         public MainWindow()
         {
             InitializeComponent();
-             vm = new UserViewModel();
+            vm = new UserViewModel();
             DataContext = vm;
-
+           
         }
 
         
@@ -35,6 +35,8 @@ namespace DownloaderApp.WPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //ImgShowHide.Source = new BitmapImage(new Uri(@"\image\show.png", UriKind.Relative));
+
+
         }
         public void ShowPassword()
         {
@@ -80,5 +82,7 @@ namespace DownloaderApp.WPF
             vm.txtPassword = txtPasswordbox.Password;
             
         }
+
+
     }
 }

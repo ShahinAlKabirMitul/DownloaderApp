@@ -14,7 +14,7 @@ namespace DownloaderViewModel
 {
    public class UserViewModel: INotifyPropertyChanged
     {
-       private User _user;
+        private User _user;
         private List<User> _users;
         private readonly DelegateCommand _loginCommand;
         public ICommand LoginCommand => _loginCommand;
@@ -62,10 +62,15 @@ namespace DownloaderViewModel
            get { return _user.Password; }
            set { _user.Password = value;Changed("txtPassword"); }
        }
-
-        public bool CanLogIn(string userName,string passworld)
+        public bool IsLoggedIn
         {
-           var isFound= _users.FirstOrDefault(s => s.UserName == userName && s.Password == passworld);
+            get { return CanLogIn(); }
+            set { CanLogIn(); Changed("IsLoggedIn"); }
+        }
+
+        public bool CanLogIn()
+        {
+           var isFound= _users.FirstOrDefault(s => s.UserName == txtUserName && s.Password == txtPassword);
             if (isFound == null)
                 return false;
             return true;

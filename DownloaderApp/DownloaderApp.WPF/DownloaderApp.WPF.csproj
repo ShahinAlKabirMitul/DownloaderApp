@@ -16,16 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="bin\Debug\netcoreapp3.1\UserInfo.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DownloaderViewModel\DownloaderViewModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\hide.png" />
     <Resource Include="Images\show.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\netcoreapp3.1\UserInfo.xml" />
   </ItemGroup>
 
 </Project>

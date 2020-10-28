@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DownloadList>
+  <Item>
+    <Title>Master Zip</Title>
+    <Link>https://github.com/torvalds/linux/archive/master.zip</Link>
+  </Item>
+  <Item>
+    <Title>Simple Png</Title>
+    <Link>https://demo-res.cloudinary.com/image/upload/sample.png</Link>
+  </Item>
+  <Item>
+    <Title>Python Tgz</Title>
+    <Link>https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz</Link>
+  </Item>
+
+</DownloadList>

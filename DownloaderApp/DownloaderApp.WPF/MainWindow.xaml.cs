@@ -27,6 +27,7 @@ namespace DownloaderApp.WPF
             InitializeComponent();
             _userViewModel = new UserViewModel();
             DataContext = _userViewModel;
+            
            
         }
 
@@ -36,7 +37,7 @@ namespace DownloaderApp.WPF
         {
             //ImgShowHide.Source = new BitmapImage(new Uri(@"\image\show.png", UriKind.Relative));
 
-
+            txtUserName.Focus();
         }
         public void ShowPassword()
         {

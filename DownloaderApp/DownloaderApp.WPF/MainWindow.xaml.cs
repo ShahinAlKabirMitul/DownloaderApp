@@ -21,12 +21,12 @@ namespace DownloaderApp.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        UserViewModel vm;
+        UserViewModel _userViewModel;
         public MainWindow()
         {
             InitializeComponent();
-            vm = new UserViewModel();
-            DataContext = vm;
+            _userViewModel = new UserViewModel();
+            DataContext = _userViewModel;
            
         }
 
@@ -71,18 +71,16 @@ namespace DownloaderApp.WPF
 
         private void txtPasswordbox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (txtPasswordbox.Password.Length > 0)
-            {
-                ImgShowHide.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                ImgShowHide.Visibility = Visibility.Hidden;
-            }
-            vm.txtPassword = txtPasswordbox.Password;
-            
+            ImgShowHide.Visibility = txtPasswordbox.Password.Length > 0 ? Visibility.Visible : Visibility.Hidden;
+            _userViewModel.txtPassword = txtPasswordbox.Password;
         }
 
-
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_userViewModel.IsLoggedIn) return;
+            frmDownload download = new frmDownload();
+            download.Show();
+            this.Close();
+        }
     }
 }

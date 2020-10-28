@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DownloaderViewModel;
 
 namespace DownloaderApp.WPF
 {
@@ -17,9 +18,12 @@ namespace DownloaderApp.WPF
     /// </summary>
     public partial class frmDownload : Window
     {
+        DownloadInfoViewModel _downloadInfoViewModel;
         public frmDownload()
         {
             InitializeComponent();
+            _downloadInfoViewModel= new DownloadInfoViewModel();
+            DataContext = _downloadInfoViewModel;
         }
     }
 }

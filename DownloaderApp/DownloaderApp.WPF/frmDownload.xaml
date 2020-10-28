@@ -7,6 +7,25 @@
         mc:Ignorable="d"
         Title="frmDownload" Height="450" Width="800">
     <Grid>
-        
-    </Grid>
+
+        <StackPanel HorizontalAlignment = "Left">
+            <ItemsControl ItemsSource = "{Binding Path = DownloadInfos}">
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+
+                        <StackPanel Orientation = "Horizontal">
+                            <TextBox Text = "{Binding Path = Title, Mode = TwoWay}" 
+                                     Width = "100" Margin = "3 5 3 5"/>
+                            <ProgressBar  Minimum="0" Width="100" Height="25" Maximum="100" Value="{Binding Progress}" />
+                            <Button Content="{Binding Label,Mode=TwoWay}" Width="100" Height="25"></Button>
+
+                        </StackPanel>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        </StackPanel>
+</Grid>
 </Window>

@@ -11,9 +11,9 @@ namespace DownloaderViewModel
 {
    public class DownloadItemProvider
     {
-        public ObservableCollection<DownloadInfo> GetDownloadItems()
+        public List<DownloadInfo> GetDownloadItems()
         {
-            ObservableCollection<DownloadInfo> downloadInfos = new ObservableCollection<DownloadInfo>();
+            List<DownloadInfo> downloadInfos = new List<DownloadInfo>();
 
             XmlDataDocument xmldoc = new XmlDataDocument();
             XmlNodeList xmlnode;

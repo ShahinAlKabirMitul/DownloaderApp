@@ -20,11 +20,15 @@ namespace DownloaderViewModel
        
 
        private ObservableCollection<DownloadInfo> _downloadInfos;
+       
        public ObservableCollection<DownloadInfo> DownloadInfos
         {
-            get;
-            set;
-          
+           get { return _downloadInfos; }
+           set
+           {
+               _downloadInfos = value;
+               OnPropertyChanged("DownloadInfos");
+           }
        }
 
         private DownloadItemProvider _provider;
@@ -44,7 +48,7 @@ namespace DownloaderViewModel
         {
             _downloadInfo = new DownloadInfo();
             _provider= new DownloadItemProvider();
-            DownloadInfos = _provider.GetDownloadItems();
+            DownloadInfos = new ObservableCollection<DownloadInfo>(_provider.GetDownloadItems()); 
             _downloadAllCommand = new DelegateCommand(DownloadAll);
             _downloadCommand = new DelegateCommand(DownloadSingle);
         }
@@ -58,12 +62,22 @@ namespace DownloaderViewModel
         private void DownloadSingle(object obj)
         {
             var isFound = DownloadInfos.FirstOrDefault(s => s.Title == SelectedItem.Title);
-            DownloadInfos.Remove(isFound);
+           // DownloadInfos.Remove(isFound);
 
-            SelectedItem.Progress = 100;
-            SelectedItem.IsComplete = true;
-
+            //SelectedItem.Progress = 100;
+            //SelectedItem.IsComplete = true;
+            //SelectedItem.IsComplete = true;
+            //SelectedItem.Progress = 100;
+            
             DownloadInfos.Add(SelectedItem);
+
+            foreach (var downloadInfo in DownloadInfos)
+            {
+                downloadInfo.IsComplete = true;
+                downloadInfo.Progress = 100;
+                downloadInfo.Title = "XXX";
+            }
+          //  Download1(SelectedItem.Link);
 
 
         }

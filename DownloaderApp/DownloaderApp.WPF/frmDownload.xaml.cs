@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DownloaderModel;
 using DownloaderViewModel;
+using Microsoft.Win32;
 
 namespace DownloaderApp.WPF
 {
@@ -23,28 +24,46 @@ namespace DownloaderApp.WPF
     public partial class frmDownload : Window
     {
         DownloadInfoViewModel _downloadInfoViewModel;
+        string filePath = Directory.GetCurrentDirectory() + @"\tepdownload";
         public frmDownload()
         {
-            InitializeComponent();
-            _downloadInfoViewModel= new DownloadInfoViewModel();
-            DataContext = _downloadInfoViewModel;
+            try
+            {
+                InitializeComponent();
+                _downloadInfoViewModel = new DownloadInfoViewModel();
+                DataContext = _downloadInfoViewModel;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message + "~~" + ex.InnerException);
+            }
         }
 
         private void btnDownload_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
-            var dataObject = btn.DataContext as DownloadInfo;
-            _downloadInfoViewModel.SelectedItem = dataObject;
+            try
+            {
+                Button btn = sender as Button;
+                var dataObject = btn.DataContext as DownloadInfo;
+                _downloadInfoViewModel.SelectedItem = dataObject;
+                if (_downloadInfoViewModel.SelectedItem.IsComplete)
+                {
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.InitialDirectory = filePath;
+                    if (openFileDialog.ShowDialog() == true)
+                        File.ReadAllText(filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message + "~~" + ex.InnerException);
+            }
+
+            
           
-           
         }
-        public void Extract(object sender, AsyncCompletedEventArgs e)
-        {
-            Console.WriteLine("File has been downloaded.");
-        }
-        public void ProgessChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            Console.WriteLine($"Download status: {e.ProgressPercentage}%.");
-        }
+        
     }
 }

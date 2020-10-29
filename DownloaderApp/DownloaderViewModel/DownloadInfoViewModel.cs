@@ -7,6 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml;
 using DownloaderModel;
@@ -41,8 +43,6 @@ namespace DownloaderViewModel
         public DownloadInfo SelectedItem { get; set; }
 
         private readonly DelegateCommand _downloadCommand;
-        //private DelegateCommand<DownloadInfo> _downloadInfoSelectedCommand;
-
 
         public DownloadInfoViewModel()
         {
@@ -55,62 +55,105 @@ namespace DownloaderViewModel
 
         private void DownloadAll(object obj)
         {
-            var ddd = obj;
-            var dd = DownloadInfos;
+            int i = 0;
+
+            Thread mainThread = new Thread(new ThreadStart(DownloadMain));
+            // Start secondary thread  
+            mainThread.Start();
+
+        }
+
+        private void DownloadMain()
+        {
+            foreach (var item in DownloadInfos)
+            {
+                SelectedItem = item;
+                bool ok = false;
+                //StartDownload(SelectedItem.Link);
+
+                Thread subThread = new Thread(new ThreadStart(StartDownload));
+                // Start secondary thread  
+                subThread.Start();
+
+                while (SelectedItem.IsComplete == false)
+                {
+
+                }
+
+            }
         }
 
         private void DownloadSingle(object obj)
         {
-            var isFound = DownloadInfos.FirstOrDefault(s => s.Title == SelectedItem.Title);
-           // DownloadInfos.Remove(isFound);
 
-            //SelectedItem.Progress = 100;
-            //SelectedItem.IsComplete = true;
-            //SelectedItem.IsComplete = true;
-            //SelectedItem.Progress = 100;
+            if (SelectedItem.Label == "Cancel")
+            {
+                client.CancelAsync();
+                SelectedItem.IsCancel = true;
+            }
+            if (!SelectedItem.IsComplete && SelectedItem.IsCancel==false)
+            {
+                StartDownload();
+            }
             
-            DownloadInfos.Add(SelectedItem);
-
-            foreach (var downloadInfo in DownloadInfos)
-            {
-                downloadInfo.IsComplete = true;
-                downloadInfo.Progress = 100;
-                downloadInfo.Title = "XXX";
-            }
-          //  Download1(SelectedItem.Link);
-
 
         }
-
-        public void Download1(string remoteUri)
+        WebClient client;
+        string filePath = Directory.GetCurrentDirectory() + "/tepdownload/";
+        public void StartDownload()
         {
-            string FilePath = Directory.GetCurrentDirectory() + "/tepdownload/" + Path.GetFileName(remoteUri); // path where download file to be saved, with filename, here I have taken file name from supplied remote url
-            using (WebClient client = new WebClient())
+            string remoteUri = SelectedItem.Link;
+            var  path = filePath+ Path.GetFileName(remoteUri);
+            try
             {
-                try
+                client = new WebClient();
+                if (!Directory.Exists("tepdownload"))
                 {
-                    if (!Directory.Exists("tepdownload"))
-                    {
-                        Directory.CreateDirectory("tepdownload");
-                    }
-                    Uri uri = new Uri(remoteUri);
-                    client.DownloadFileCompleted += new AsyncCompletedEventHandler(Extract);
-                    client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgessChanged);
-                    client.DownloadFileAsync(uri, FilePath);
+                    Directory.CreateDirectory("tepdownload");
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
+                Uri uri = new Uri(remoteUri);
+                client.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted);
+             
+                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgessChanged);
+                client.DownloadFileAsync(uri, path);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
-        public void Extract(object sender, AsyncCompletedEventArgs e)
+
+        public static string GetFilenameFromUrl(string url)
         {
+            return String.IsNullOrEmpty(url.Trim()) || !url.Contains(".") ? string.Empty : Path.GetFileName(new Uri(url).AbsolutePath);
+        }
+
+        public void DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+            {
+                //cleanup delete partial file
+                var fileName = GetFilenameFromUrl(SelectedItem.Link);
+                string path = Directory.GetCurrentDirectory() + @"\tepdownload\"+ fileName;
+
+                
+               
+                System.IO.File.Delete(path);
+                SelectedItem.IsCancel = false;
+                SelectedItem.Label = "Download";
+                SelectedItem.Progress = 0;
+                return;
+            }
+            SelectedItem.Label = "Open";
             SelectedItem.IsComplete = true;
+            
+            //SelectedItem.Progress = 100;
         }
         public void ProgessChanged(object sender, DownloadProgressChangedEventArgs e)
         {
+
             SelectedItem.Progress = e.ProgressPercentage;
+            SelectedItem.Label = "Cancel";
         }
 
 

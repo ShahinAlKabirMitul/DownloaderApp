@@ -23,8 +23,6 @@ namespace DownloaderViewModel
             xmldoc.Load(fs);
             xmlnode = xmldoc.GetElementsByTagName("Item");
 
-            Random rnd = new Random();
-
             for (i = 0; i <= xmlnode.Count - 1; i++)
             {
 
@@ -34,12 +32,14 @@ namespace DownloaderViewModel
                     Link = xmlnode[i].ChildNodes.Item(1).InnerText.Trim(),
                     IsComplete = false,
                     Label = "Download",
-                    Progress = rnd.Next(1,100)
+                    Progress = 0
                 });
 
 
             }
             return downloadInfos;
         }
+
+       
     }
 }
